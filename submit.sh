@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#SBATCH --job-name=check_gpus
+#SBATCH --job-name=test
 #SBATCH --time=00:10:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
