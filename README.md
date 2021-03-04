@@ -1,3 +1,11 @@
+## Convert a Docker container to a Singularity container
+
+`docker build -t local/my_container .`
+`sudo singularity build my_container.sif docker-daemon://local/my_container`
+
+Using `docker://my_container` looks for the container on Docker Hub. 
+When you use docker-daemon, it looks at your locally built docker containers. 
+
 ## Running a Singularity container
 
 Runs an interative shell session on GPUs (`--nv`) loading the container image `tensorflow.sif`.
