@@ -105,10 +105,15 @@ ssh cees-mazama.stanford.edu
 
 Do not run your jobs directly on the headnode. Instead, submit Slurm job requests from the headnode. 
 
-Use this command to request an interative bash session on the GPU partition using 1 GPU:
+Request an interative shell session using 1 GPU:
 
 ```
 srun --partition=gpu --gres=gpu:1 --pty bash
+```
+
+Request an interactive shell session inside our Singularity container using 1 GPU:
+```
+srun --partition=gpu --gres=gpu:1 --pty singularity shell --nv -B /scratch/fantine:/scratch/fantine ml_framework_latest.sif
 ```
 
 # Author
