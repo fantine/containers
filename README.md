@@ -105,7 +105,7 @@ ssh cees-mazama.stanford.edu
 
 Do not run your jobs directly on the headnode. Instead, submit Slurm job requests from the headnode. 
 
-Use this command to request to run an interative bash session on the GPU partition using 1 GPU:
+Use this command to request an interative bash session on the GPU partition using 1 GPU:
 
 ```
 srun --partition=gpu --gres=gpu:1 --pty bash
