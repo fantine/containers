@@ -1,0 +1,5 @@
+FROM tensorflow/tensorflow:2.2.2-gpu
+RUN apt-get update && apt-get install -y vim
+COPY requirements.txt ./
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
