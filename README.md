@@ -1,3 +1,5 @@
+Learn more about Singularity containers: https://singularity.lbl.gov
+
 ## Convert a Docker container to a Singularity container
 
 `docker build -t local/my_container .`
