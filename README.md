@@ -23,7 +23,17 @@ Create a Singularity container with a specific version of TensorFlow (in this ca
 
 Runs an interative shell session on GPUs (`--nv`) loading the container image `tensorflow.sif`.
 
-`singularity exec --nv tensorflow.sif bash`
+`singularity shell --nv tensorflow.sif`
+
+## Bind volumes
+
+If enabled by the system administrator, Singularity allows you to map directories on your host system to directories within your container using bind mounts. This allows you to read and write data on the host system with ease. More info here: https://singularity.lbl.gov/docs-mount
+
+`singularity shell --nv -B /scr1/fantine:/scr1/fantine tensorflow_2.2.2.sif`
+
+You can also set it as an environment variable.  
+
+`export SINGULARITY_BINDPATH="/opt,/data:/mnt"`
 
 ## Running a GPU job on Mazama
 
