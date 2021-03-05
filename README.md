@@ -71,31 +71,45 @@ singularity build ml_framework_latest.sif docker://fantine/ml_framework:latest
 
 ## Running a Singularity container
 
-Runs an interative shell session on GPUs (`--nv`) loading the container image `tensorflow.sif`.
+Run an interative shell session on GPUs:
+```
+singularity shell --nv ml_framework_latest.sif
+```
+- `shell` specifies we want an interactive shell session.
+- `--nv` specifies we want a GPU environment.
+- `ml_framework_latest.sif` is the Singularity container we cant to use.
 
-`singularity shell --nv tensorflow.sif`
 
 ## Bind volumes
 
-If enabled by the system administrator, Singularity allows you to map directories on your host system to directories within your container using bind mounts. This allows you to read and write data on the host system with ease. More info here: https://singularity.lbl.gov/docs-mount
+If enabled by the system administrator, Singularity allows you to map directories on your host system to directories within your container. This allows you to read and write data on the host system with ease. More info here: https://singularity.lbl.gov/docs-mount
 
-`singularity shell --nv -B /scr1/fantine:/scr1/fantine tensorflow_2.2.2.sif`
+For instance, to mount a scratch directory:
+```
+singularity shell --nv -B /scr1/fantine:/scr1/fantine ml_framework_latest.sif
+```
 
-You can also set it as an environment variable.  
+This can also be set as an environment variable.  
 
-`export SINGULARITY_BINDPATH="/opt,/data:/mnt"`
+```
+export SINGULARITY_BINDPATH="scr1/fantine:/scr1/fantine"
+```
 
-## Running a GPU job on Mazama
+## Running a containerized GPU job on the Mazama cluster
 
 Log into CEES Mazama's headnode:
 
-`ssh cees-mazama.stanford.edu`
+```
+ssh cees-mazama.stanford.edu
+```
 
 Do not run your jobs directly on the headnode. Instead, submit Slurm job requests from the headnode. 
 
 Use this command to request to run an interative bash session on the GPU partition using 1 GPU:
 
-`srun --partition=gpu --gres=gpu:1 --pty bash`
+```
+srun --partition=gpu --gres=gpu:1 --pty bash
+```
 
 # Author
 
