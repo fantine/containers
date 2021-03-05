@@ -2,9 +2,16 @@ Learn more about Singularity containers: https://singularity.lbl.gov
 
 ## Convert a Docker container to a Singularity container
 
-`docker build -t local/my_container .`
+Build your container with Docker. 
 
-`sudo singularity build my_container.sif docker-daemon://local/my_container`
+`docker build -t my_container .`
+
+If you run `sudo docker image list` you will see a list of your docker containers.
+It will show repositories and tags for all of them.
+Use the following command to create a Singularity container from your Docker container. 
+Replace `my_container` and `latest` with the repository and tag of your choice.
+
+`sudo singularity build my_container.sif docker-daemon://my_container:latest`
 
 Using `docker://my_container` looks for the container on Docker Hub. 
 When you use docker-daemon, it looks at your locally built docker containers. 
