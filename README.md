@@ -40,7 +40,7 @@ singularity build my_container.sif docker-daemon://name:tag
 
 - `my_container.sif` is the name to which the Singularity container is written.
 - Replace `name:tag` with the name and tag of your Docker container.
-- When you use `docker-daemon;`, it looks at your locally built docker containers. Using `docker:` looks for the container on Docker Hub online (see next section). 
+- When you use `docker-daemon:`, it looks at your locally built docker containers. Using `docker:` looks for the container on Docker Hub online (see next section). 
 
 For instance, to convert the ML framework docker container from the previous section to a Singularity container:
 
@@ -50,15 +50,24 @@ singularity build ml_framework_latest.sif docker-daemon://ml_framework:latest
 
 ## Create a Singularity container straight from an Docker Hub container
 
-Alternatively, you can also create a Singularity container straight from the Docker Hub online.
+Alternatively, you can also build a Singularity container straight from the Docker Hub online.
 
-Create a Singularity container with the latest version of TensorFlow GPU:
+Build a Singularity container with the latest version of TensorFlow GPU:
 
-`singularity build tensorflow_latest.sif docker://tensorflow/tensorflow:latest-gpu`
+```
+singularity build tensorflow_latest.sif docker://tensorflow/tensorflow:latest-gpu
+```
 
-Create a Singularity container with a specific version of TensorFlow (in this case, the GPU version 2.2.2):
+Build a Singularity container with a specific version of TensorFlow (e.g. 2.2.2):
 
-`singularity build tensorflow_2.2.2.sif docker://tensorflow/tensorflow:2.2.2-gpu`
+```
+singularity build tensorflow_2.2.2.sif docker://tensorflow/tensorflow:2.2.2-gpu
+```
+
+Build a Singularity container from one of the images I have uploaded to the Docker Hub:
+```
+singularity build ml_framework_latest.sif docker://fantine/ml_framework:latest
+```
 
 ## Running a Singularity container
 
