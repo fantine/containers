@@ -1,5 +1,7 @@
 # Creating containers for scientific computing
 
+- **Author:** Fantine Huot
+
 Within the scientific community it is notoriously difficult to reuse other people's code.
 Research software packages often require specific builds and dependencies that are challenging to reproduce.
 
@@ -12,7 +14,7 @@ Singularity enables users to have full control of their environment, which means
 ## Create a Docker container 
 
 Build a Docker container from a Dockerfile:
-```
+```bash
 docker build -t name:tag -f docker_file .
 ```
 
@@ -20,13 +22,13 @@ docker build -t name:tag -f docker_file .
 - The option `-f` allows you to specify the name of the Dockerfile to use to build the container.
 
 For instance, to recreate my machine learning (ML) framework:
-```
+```bash
 docker build -t ml_framework:latest -f Dockerfile_ML_framework
 ```
 
 Display all your Docker containers: 
 
-```
+```bash
 docker image list
 ```
 
@@ -34,7 +36,7 @@ docker image list
 
 Convert a Docker container to a Singularity container:
 
-```
+```bash
 singularity build my_container.sif docker-daemon://name:tag
 ```
 
@@ -44,7 +46,7 @@ singularity build my_container.sif docker-daemon://name:tag
 
 For instance, to convert the ML framework docker container from the previous section to a Singularity container:
 
-```
+```bash
 singularity build ml_framework_latest.sif docker-daemon://ml_framework:latest
 ```
 
@@ -54,25 +56,25 @@ Alternatively, you can also build a Singularity container straight from the Dock
 
 Build a Singularity container with the latest version of TensorFlow GPU:
 
-```
+```bash
 singularity build tensorflow_latest.sif docker://tensorflow/tensorflow:latest-gpu
 ```
 
 Build a Singularity container with a specific version of TensorFlow (e.g. 2.2.2):
 
-```
+```bash
 singularity build tensorflow_2.2.2.sif docker://tensorflow/tensorflow:2.2.2-gpu
 ```
 
 Build a Singularity container from one of the images I have uploaded to the Docker Hub:
-```
+```bash
 singularity build ml_framework_latest.sif docker://fantine/ml_framework:latest
 ```
 
 ## Running a Singularity container
 
 Run an interative shell session on GPUs:
-```
+```bash
 singularity shell --nv ml_framework_latest.sif
 ```
 - `shell` specifies we want an interactive shell session.
@@ -85,37 +87,27 @@ singularity shell --nv ml_framework_latest.sif
 If enabled by the system administrator, Singularity allows you to map directories on your host system to directories within your container. This allows you to read and write data on the host system with ease. More info here: https://singularity.lbl.gov/docs-mount
 
 For instance, to mount a scratch directory:
-```
-singularity shell --nv -B /scr1/fantine:/scr1/fantine ml_framework_latest.sif
+```bash
+singularity shell --nv -B /scratch/fantine:/scratch/fantine ml_framework_latest.sif
 ```
 
 This can also be set as an environment variable.  
 
-```
-export SINGULARITY_BINDPATH="scr1/fantine:/scr1/fantine"
-```
-
-## Running a containerized GPU job on the Mazama cluster
-
-Log into CEES Mazama's headnode:
-
-```
-ssh cees-mazama.stanford.edu
+```bash
+export SINGULARITY_BINDPATH="scratch/fantine:/scratch/fantine"
 ```
 
-Do not run your jobs directly on the headnode. Instead, submit Slurm job requests from the headnode. 
+## Running a containerized GPU job on a SLURM cluster
+
+Submit Slurm job requests from the headnode. 
 
 Request an interative shell session using 1 GPU:
 
-```
+```bash
 srun --partition=gpu --gres=gpu:1 --pty bash
 ```
 
-Request an interactive shell session inside our Singularity container using 1 GPU:
+Request an interactive shell session inside our Singularity container using 1 V100 GPU:
+```bash
+srun --partition=gpu --gres=gpu:v100:1 --pty singularity shell --nv -B /scratch/fantine:/scratch/fantine ml_framework_latest.sif
 ```
-srun --partition=gpu --gres=gpu:1 --pty singularity shell --nv -B /scratch/fantine:/scratch/fantine ml_framework_latest.sif
-```
-
-# Author
-
-- Fantine Huot
