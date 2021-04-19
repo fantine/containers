@@ -23,7 +23,7 @@ docker build -t name:tag -f docker_file .
 
 For instance, to recreate my machine learning (ML) framework:
 ```bash
-docker build -t ml_framework:latest -f Dockerfile_ML_framework
+docker build -t ml_framework:latest -f Dockerfile_ML_framework .
 ```
 
 Display all your Docker containers: 
